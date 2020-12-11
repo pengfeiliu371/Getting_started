@@ -11,8 +11,8 @@ Here I created an evironment named "geo".
 2. Install packages
 
 Here I set conda-forge as the default channel, and download all packages from this channel.
-
 Packages installed from different channels can be conflicting with each other.
+
 > conda config --add channels conda-forge 
 
 > conda config --set channel_priority strict
