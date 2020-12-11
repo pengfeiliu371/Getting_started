@@ -20,5 +20,6 @@ Packages installed from different channels can be conflicting with each other.
 Install packages for geo data analysis
 
 > conda install esmpy
+
 (The esmpy package is needed for regridding. Currently, it is not working on windows computers. It is highly recommended to use on cluster. If you really want to use it on a windows computer, a workaround is to use docker. https://xesmf.readthedocs.io/en/latest/installation.html)
 
