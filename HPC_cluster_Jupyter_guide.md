@@ -35,7 +35,7 @@ Install any other packages as needed
 
 Run the following command to request for 1 node, 4 CPUs, 32gb memory, 4 hours wall time: 
 
-> pace-jupyter-notebook -q inferno -l nodes=1:ppn=4,mem=32gb,walltime=4:00:00
+> pace-jupyter-notebook -q inferno -A GT-pliu40 -l nodes=1:ppn=4,mem=32gb,walltime=4:00:00 --conda-env=geo
 
 
 
