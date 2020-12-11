@@ -27,4 +27,6 @@ Install packages for geo data analysis:
 
 > conda install xesmf dask matplotlib cartopy netcdf4 descartes
 
+> conda install jupyter
+
 Install any other packages as needed
