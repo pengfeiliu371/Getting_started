@@ -1,14 +1,14 @@
 ## Running Jupyter jobs on Georgia Tech new HPC environment (Pheonix)
 > by Pengfei Liu (pengfei.liu@eas.gatech.edu)
 
-1. Setup Anaconda on PACE cluster
+### 1. Setup Anaconda on PACE cluster
 
 Follow the PACE document for conda, step 1-6:
 https://docs.pace.gatech.edu/software/anacondaEnv/
 
 Here I created an evironment named "geo".
 
-2. Install packages
+### 2. Install packages
 
 Here I set conda-forge as the default channel, and download all packages from this channel.
 Packages installed from different channels can be conflicting with each other.
@@ -30,3 +30,14 @@ Install packages for geo data analysis:
 > conda install jupyter
 
 Install any other packages as needed
+
+### 3. Use jupyter notebook on PACE
+
+Run the following command to request for 1 node, 4 CPUs, 32gb memory, 4 hours wall time: 
+
+> pace-jupyter-notebook -q inferno -l nodes=1:ppn=4,mem=32gb,walltime=4:00:00
+
+
+
+For more informaiton, refer to the PACE document below:
+https://docs.pace.gatech.edu/interactiveJobs/jupyterInt/
