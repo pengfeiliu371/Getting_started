@@ -62,10 +62,10 @@ https://docs.pace.gatech.edu/interactiveJobs/jupyterInt/
 
 Once you finish the interactive session, kill the job:
 
-> qdel <job-id>
+> qdel job-id
 
 You will find your job_id by typing:
 
-> qstat -u <username>
+> qstat -u username
 
 You may also find files like "pace-jupyter-notebook.pbs.oXXXXXXXX" in your home directory. The number in the most recent file should be your job_id. 
