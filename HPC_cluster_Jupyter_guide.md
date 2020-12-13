@@ -34,6 +34,8 @@ Install packages for geo data analysis:
 
 Install any other packages as needed.
 
+These packages should be adequate for analysis and visaulization of NETCDF data. xESMF is the regridding package. GeoPandas is used to handle .shp files. I will later post some examples. 
+
 If you are familiar with NCL, you may check out these packages:
 http://www.pyngl.ucar.edu/
 
