@@ -32,7 +32,10 @@ Install packages for geo data analysis:
 
 > conda install jupyter
 
-Install any other packages as needed
+Install any other packages as needed.
+
+If you are familiar with NCL, you may check out these packages:
+http://www.pyngl.ucar.edu/
 
 ### 3. Use jupyter notebook on PACE
 
