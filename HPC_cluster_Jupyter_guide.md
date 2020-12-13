@@ -37,11 +37,17 @@ Install any other packages as needed.
 If you are familiar with NCL, you may check out these packages:
 http://www.pyngl.ucar.edu/
 
+If you work on GEOS-Chem output, GCPy might be useful:
+https://github.com/geoschem/gcpy
+
 ### 3. Use jupyter notebook on PACE
 
 Run the following command to request for 1 node, 4 CPUs, 32gb memory, 4 hours wall time: 
 
 > pace-jupyter-notebook -q inferno -A GT-pliu40 -l nodes=1:ppn=4,mem=32gb,walltime=4:00:00 --conda-env=geo
+
+You will need an account to be charged on for using the new phoenix cluster (here GT-pliu40 is the account for my group). To check what accounts you can use, type:
+> mam-balance
 
 Once the requested computational resource is allocated, follow the instruction on the screen. For mac users, you will need to press shift+~, shift+C (quickly) to get > ssh, and add ssh port forwarding option to your running ssh session. (I need to test if it works for windows users...)
 
