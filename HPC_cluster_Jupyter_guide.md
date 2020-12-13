@@ -1,12 +1,15 @@
-## Running Jupyter jobs on Georgia Tech new HPC environment (Pheonix)
+## Running Jupyter jobs on Georgia Tech new HPC environment (Phoenix)
 > by Pengfei Liu (pengfei.liu@eas.gatech.edu)
 
-### 1. Setup Anaconda on PACE cluster
+This tutorial is for the new GaTech phoenix cluster. The Anaconda software has been installed, and a "pace-jupyter-notebook" script has been develped by PACE support team. If you are interested to install Anaconda from scratch, the tutorial below might be useful:
+https://github.com/Environment-and-Seniors-Health-Emory/Getting_started/blob/main/HPC_cluster_GUI_Jupyter_Guide.md
+
+### 1. Setup Anaconda environment on PACE cluster
 
 Follow the PACE document for conda, step 1-6:
 https://docs.pace.gatech.edu/software/anacondaEnv/
 
-Here I created an evironment named "geo".
+In step 4, I created an evironment named "geo".
 
 ### 2. Install packages
 
@@ -37,7 +40,9 @@ Run the following command to request for 1 node, 4 CPUs, 32gb memory, 4 hours wa
 
 > pace-jupyter-notebook -q inferno -A GT-pliu40 -l nodes=1:ppn=4,mem=32gb,walltime=4:00:00 --conda-env=geo
 
+Once the requested computational resource is allocated, follow the instruction on the screen. For mac users, you will need to press shift+~, shift+C (quickly) to get > ssh, and add ssh port forwarding option to your running ssh session. (I need to test if it works for windows users...)
 
+Then, copy and paste the sever address to your browser on your local computer, Jupyter should be ready to use.
 
 For more informaiton, refer to the PACE document below:
 https://docs.pace.gatech.edu/interactiveJobs/jupyterInt/
