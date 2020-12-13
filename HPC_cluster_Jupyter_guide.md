@@ -39,7 +39,7 @@ These packages should be adequate for analysis and visaulization of NETCDF data.
 If you are familiar with NCL, you may check out these packages:
 http://www.pyngl.ucar.edu/
 
-If you work on GEOS-Chem output, GCPy might be useful:
+If you work with GEOS-Chem output, GCPy might be useful:
 https://github.com/geoschem/gcpy
 
 ### 3. Use jupyter notebook on PACE
