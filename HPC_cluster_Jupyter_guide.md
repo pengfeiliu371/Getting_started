@@ -1,7 +1,7 @@
-## Running Jupyter jobs on Georgia Tech new HPC environment (Phoenix)
+## Analyze geodata interactively on Georgia Tech new HPC environment (Phoenix)
 > by Pengfei Liu (pengfei.liu@eas.gatech.edu)
 
-This tutorial is for the new GaTech phoenix cluster. The Anaconda software has been installed, and a "pace-jupyter-notebook" script has been develped by PACE support team. If you are interested to install Anaconda from scratch, the tutorial below might be useful:
+This tutorial is for the new GaTech phoenix cluster. The Anaconda software has been installed, and a "pace-jupyter-notebook" script has been develped by PACE support team. If you are interested to install Anaconda from scratch, the tutorial in the link below might be useful:
 https://github.com/Environment-and-Seniors-Health-Emory/Getting_started/blob/main/HPC_cluster_GUI_Jupyter_Guide.md
 
 ### 1. Setup Anaconda environment on PACE cluster
@@ -57,3 +57,6 @@ Then, copy and paste the sever address to your browser on your local computer, J
 
 For more informaiton, refer to the PACE document below:
 https://docs.pace.gatech.edu/interactiveJobs/jupyterInt/
+
+### 4. How to kill a job
+
