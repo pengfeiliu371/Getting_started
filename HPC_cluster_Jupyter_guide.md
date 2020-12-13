@@ -1,4 +1,4 @@
-## Analyze geodata interactively on Georgia Tech new HPC environment (Phoenix)
+## Interactive geodata analysis on Georgia Tech new HPC environment (Phoenix)
 > by Pengfei Liu (pengfei.liu@eas.gatech.edu)
 
 This tutorial is for the new GaTech phoenix cluster. The Anaconda software has been installed, and a "pace-jupyter-notebook" script has been develped by PACE support team. If you are interested to install Anaconda from scratch, the tutorial in the link below might be useful:
