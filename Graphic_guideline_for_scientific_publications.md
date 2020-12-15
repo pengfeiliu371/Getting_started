@@ -2,7 +2,7 @@
 > by Pengfei Liu (pengfei.liu@eas.gatech.edu)
 
 ### Overview
-Figures are an important element of a scientific paper. The aim of this document is to provide a guideline for graduate students and postdocs in my group on how to prepare figures for publications. Note that different journals may have different requirements. However, figures prepared following this guide should work for most of journals.
+Figures are the centerpiece of a scientific paper. The aim of this document is to provide a guideline for graduate students and postdocs in my group on how to prepare figures for publications. Note that different journals may have different requirements. However, figures prepared following this guide should work for most of journals.
 
 ### What softwares should I use?
 
@@ -25,7 +25,10 @@ Use sans-serif font family (e.g., Arial, Calibri, Helvetica). Use Times New Roma
 
 If you plot figures in actual size, font size 8 should be large enough. If you plot the figure 50% larger than actual size (not recommended), use font size 12.  
 
-It is recommended to save your figures in vector format (e.g., PDF, eps). If you plot colored maps (e.g., pcolormesh, contour plots), you may rasterize the image (otherwise the figure file size can be very large and slow to open). However, the background (i.e., axis, ticks, label) should still be in vector format and editable. 
+It is recommended to save your figures in vector format (e.g., PDF, eps). If you plot colored maps (e.g., pcolormesh, contour plots), you may rasterize the image (otherwise the figure file size can be very large and slow to open). However, the background (i.e., axes, ticks, labels) should still be in vector format and editable. 
 
+### Color maps
+
+Use 
 
 https://www.nature.com/articles/s41467-020-19160-7
