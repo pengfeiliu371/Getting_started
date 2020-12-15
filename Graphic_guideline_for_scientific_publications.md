@@ -34,4 +34,7 @@ https://www.nature.com/articles/s41467-020-19160-7
 
 For colored plots showing differences (with both positive and negative values), it is ok to use diverging color maps.
 
-### 
+### Axes, ticks, and grids
+
+See this article below:
+https://www.nature.com/articles/nmeth.2337
