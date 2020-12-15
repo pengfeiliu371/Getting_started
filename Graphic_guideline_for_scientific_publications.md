@@ -4,7 +4,7 @@
 ### Overview
 Figures are the centerpiece of a scientific paper. The aim of this document is to provide guidelines for graduate students and postdocs in my group on how to prepare figures for publications based on my personal experiences and some best practices in publishing industry. Note that different journals may have different requirements. However, figures prepared following this guide should work for most of journals.
 
-### What software do I use?
+### What software should I use?
 
 I personally use MATLAB and Python for most of the data analysis and visualization (Matlab for experimental datasets and Python for modeling/satellite datasets). For research involving mass spectrometer data, Igor might be very useful. You may use other software (e.g., R) if you like. Excel is great for making some quick plots. However, I would recommend to learn at least one programming language (and master it!) other than Excel. 
 
