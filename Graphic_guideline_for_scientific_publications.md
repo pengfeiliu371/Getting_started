@@ -6,7 +6,7 @@ Figures are an important element of a scientific paper. The aim of this document
 
 ### What softwares should I use?
 
-I personally use MATLAB and Python for most of the data analysis and visualization (Matlab for experimental datasets and Python for modeling/satellite datasets). For research involving mass spectrometer data, Igor might be very useful. You may use other software (e.g., R) if you like. However, I would recommend to learn at least one programming language (and master it!) other than Excel. I use Adobe Acrobat to make simple edits on PDF files (e.g., adding (a), (b) labels, rearrange panels, etc).
+I personally use MATLAB and Python for most of the data analysis and visualization (Matlab for experimental datasets and Python for modeling/satellite datasets). For research involving mass spectrometer data, Igor might be very useful. You may use other software (e.g., R) if you like. However, I would recommend to learn at least one programming language (and master it!) other than Excel. I use Adobe Acrobat to make simple edits on PDF files (e.g., adding (a), (b) labels, rearranging panels, etc).
 
 ### General guide
 
@@ -21,7 +21,11 @@ https://www.nature.com/nature/for-authors/formatting-guide
 
 Always set the paper size (US letter, 8.5" * 11") and figure size in your software. This will ensure that your font size in figures are consistent. It is recommended to plot figures in their actual sizes that appear in publication. For a simple, single panel figure, use single column size (width < 89 mm/3.5" for Nature journals or 3.25" for ACS journals). For complex, multiple-panel figures, you may use double column size (width < 183 mm/7.2" or 7"). The length should be < 9.5" so it fits into a single page US letter paper. 
 
-Use If you plot figures in actual size, font size 8 should be large enough. If you plot the figure 50% larger than actual size (not recommended), use font size 12.  
+Use sans-serif font family (e.g., Arial, Calibri, Helvetica). Use Times New Roman for main text of your manuscript but not for figures. 
+
+If you plot figures in actual size, font size 8 should be large enough. If you plot the figure 50% larger than actual size (not recommended), use font size 12.  
+
+It is recommended to save your figures in vector format (e.g., PDF, eps). If you plot colored maps (e.g., pcolormesh, contour plots), you may rasterize the image (otherwise the figure file size can be very large and slow to open). However, the background (i.e., axis, ticks, label) should still be in vector format and editable. 
 
 
 https://www.nature.com/articles/s41467-020-19160-7
