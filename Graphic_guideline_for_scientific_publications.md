@@ -25,7 +25,7 @@ Use sans-serif font family (e.g., Arial, Calibri, Helvetica). Use Times New Roma
 
 If you plot figures in actual size, font size 8 should be large enough. If you plot the figure 50% larger than actual size (not recommended), use font size 12.  
 
-It is recommended to save your figures in vector format (e.g., PDF, eps). If you plot colored maps (e.g., pcolormesh, contour plots), you may rasterize the image part (otherwise the figure file size can be very large and slow to open). However, the background (i.e., axes, ticks, labels) should still be in vector format and editable. 
+It is recommended to save your figures in vector format (e.g., PDF, eps). If you plot colored maps (e.g., pcolormesh, contour plots), you may rasterize the image part (using a resolution of 300 DPI or higher), because the file size of vectorized colored map can be very large and it is slow to open. However, the background (i.e., axes, ticks, labels) should still be in vector format and editable. 
 
 ### Color maps
 
