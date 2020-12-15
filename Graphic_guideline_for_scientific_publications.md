@@ -36,7 +36,7 @@ https://www.nature.com/articles/s41467-020-19160-7
 
 For colored plots showing differences (with both positive and negative values), it is ok to use diverging color maps.
 
-Use RGB format (not CYMK).
+Use RGB format (not CMYK).
 
 ### Axes, ticks, and grids
 
