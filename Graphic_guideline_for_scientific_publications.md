@@ -40,7 +40,7 @@ Use RGB format (not CMYK).
 
 ### Axes, ticks, and grids
 
-See this article below:
+See this article in the link below:
 https://www.nature.com/articles/nmeth.2337
 
 
