@@ -6,7 +6,9 @@ Figures are the centerpiece of a scientific paper. The aim of this document is t
 
 ### What software do I use?
 
-I personally use MATLAB and Python for most of the data analysis and visualization (Matlab for experimental datasets and Python for modeling/satellite datasets). For research involving mass spectrometer data, Igor might be very useful. You may use other software (e.g., R) if you like. However, I would recommend to learn at least one programming language (and master it!) other than Excel. I use Adobe Acrobat to make simple edits on PDF files (e.g., adding (a), (b) labels, rearranging panels, etc).
+I personally use MATLAB and Python for most of the data analysis and visualization (Matlab for experimental datasets and Python for modeling/satellite datasets). For research involving mass spectrometer data, Igor might be very useful. You may use other software (e.g., R) if you like. Excel is great for making some quick plots. However, I would recommend to learn at least one programming language (and master it!) other than Excel. 
+
+I use Adobe Acrobat to make simple edits on PDF files (e.g., adding (a), (b) labels, rearranging panels, etc).
 
 ### General figure guide
 
