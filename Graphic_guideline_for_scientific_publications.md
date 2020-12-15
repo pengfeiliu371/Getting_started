@@ -1,4 +1,4 @@
-## Guide to Preparing Figures for Scientific Publications
+## Guide to Preparing Figures for Scientific Publication
 > by Pengfei Liu (pengfei.liu@eas.gatech.edu)
 
 ### Overview
