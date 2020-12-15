@@ -2,7 +2,7 @@
 > by Pengfei Liu (pengfei.liu@eas.gatech.edu)
 
 ### Overview
-Figures are the centerpiece of a scientific paper. The aim of this document is to provide guidelines for graduate students and postdocs in my group on how to prepare figures for publications based on the practices of myself. Note that different journals may have different requirements. However, figures prepared following this guide should work for most of journals.
+Figures are the centerpiece of a scientific paper. The aim of this document is to provide guidelines for graduate students and postdocs in my group on how to prepare figures for publications based on my personal experiences and some best practices in publishing industry. Note that different journals may have different requirements. However, figures prepared following this guide should work for most of journals.
 
 ### What softwares should I use?
 
@@ -38,3 +38,5 @@ For colored plots showing differences (with both positive and negative values), 
 
 See this article below:
 https://www.nature.com/articles/nmeth.2337
+
+
