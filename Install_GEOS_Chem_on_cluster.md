@@ -34,10 +34,20 @@ time spack install cmake %intel@19.0.5.281
 
 time spack install gmake %intel@19.0.5.281
 
+time spack install ncview %intel@19.0.5.281
+
+spack load texinfo
+
+time spack install cgbd %intel@19.0.5.281
+
+\# see also https://github.com/geoschem/geos-chem-cloud/issues/35
 
 \####################################################################
-\# if you are in Pengfei Liu’s group at Gatech, 
-\# just start from here!!###
+
+\# if you are in Pengfei Liu’s group at Gatech 
+
+\# just start from here (spack is already installed)!!###
+
 \####################################################################
 
 #### 4. download Source Code in directory 'GC'
@@ -54,7 +64,7 @@ cd ~/GC/UT.X.Y.Z/perl/
 
 vi CopyRunDirs.input
 
-\# some path need change
+\# some path need to be changed
 
 \# root path should be /storage/coda1/p-pliu40/0/shared/GEOS-Chem
 
@@ -74,10 +84,40 @@ vi HEMCO.Config.rc # shut-down several offline emissions
 
 vi HISTORY.rc #choose preferred output
 
-time spack install ncview %intel@19.0.5.281
+#### 8. build run environment
 
-spack load texinfo
+\# do below in your run directory, here i.e. {home}/GC/rundirs/merra2_4x5_standard
 
-time spack install cgbd %intel@19.0.5.281
+source /storage/coda1/p-pliu40/0/shared/GEOS-Chem/.bashrc (or you can copy it to your own dir)
 
-\# see also https://github.com/geoschem/geos-chem-cloud/issues/35
+source /storage/coda1/p-pliu40/0/shared/GEOS-Chem/.GC (or you can copy it to your own dir)
+
+make realclean
+
+make -j16 build
+
+#### 9. submit task
+
+qsub xxx.pbs
+
+\# see template in /storage/coda1/p-pliu40/0/shared/GEOS-Chem/.template.pbs
+
+\# copy it to your own run dir and modify
+
+#### 10. check your task state
+
+qstat -u <username>
+
+\# for me, it’s qstat -u bbai32
+
+#### 11. other useful commands
+
+qdel <job id> #kill task
+
+pace-check-queue -c inferno  #check nodes state
+
+pace-check-queue -s inferno  #check nodes property
+
+checkjob <job id>
+
+mam-balance
