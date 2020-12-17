@@ -1,4 +1,4 @@
-### Installation of GEOS-Chem on Georgia Tech Phoenix cluster
+### Installation of GEOS-Chem on Georgia Tech Phoenix cluster (using spack)
 
 > Contributed By Bai Bin
 
