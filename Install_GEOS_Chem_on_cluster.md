@@ -23,12 +23,21 @@ source $SPACK_ROOT/share/spack/setup-env.sh
 \# source /storage/coda1/p-pliu40/0/shared/GEOS-Chem/spack/share/spack/setup-env.sh
 
 3. download Packages Using 'spack install'
+
 module load intel/19.0.5
+
 time spack install netcdf-fortran %intel@19.0.5.281
+
 time spack install flex %intel@19.0.5.281
+
 time spack install cmake %intel@19.0.5.281
+
 time spack install gmake %intel@19.0.5.281
+
 time spack install ncview %intel@19.0.5.281
+
 spack load texinfo
+
 time spack install cgbd %intel@19.0.5.281
+
 \# see also https://github.com/geoschem/geos-chem-cloud/issues/35
