@@ -62,7 +62,15 @@ time spack install cgbd %intel@19.0.5.281
 
 #### 4. download Source Code in directory 'GC'
 
+For version 12.9.3 or ealier:
+
 git clone https://github.com/geoschem/geos-chem Code.X.Y.Z
+
+For version 13.0.0 or later
+
+git clone https://github.com/geoschem/GCClassic GCClassic.13.0.0
+
+http://wiki.seas.harvard.edu/geos-chem/index.php/Downloading_GEOS-Chem_source_code_(13.0.0_and_later_versions)
 
 #### 5. download Unit test in directory 'GC'
 
