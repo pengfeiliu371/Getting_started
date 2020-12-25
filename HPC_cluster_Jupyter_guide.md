@@ -42,7 +42,18 @@ http://www.pyngl.ucar.edu/
 If you work with GEOS-Chem output, GCPy might be useful:
 https://github.com/geoschem/gcpy
 
+
+\###############################################################
+
+\# start from here once environment is successfully configured
+
+\###############################################################
+
 ### 3. Use jupyter notebook on PACE
+
+load Anaconda:
+
+> module load anaconda3
 
 Run the following command to request for 1 node, 4 CPUs, 32gb memory, 4 hours wall time: 
 
