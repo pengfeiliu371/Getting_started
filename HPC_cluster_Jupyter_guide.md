@@ -71,8 +71,11 @@ https://docs.pace.gatech.edu/interactiveJobs/jupyterInt/
 
 
 * If you could not see the new environment when you create the jupyter notebook
+
 > conda activate geo
+
 > conda install ipykernel
+
 > python -m ipykernel install --user --name=geo
  
 ### 4. How to kill a job
