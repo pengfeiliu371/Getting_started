@@ -70,7 +70,7 @@ For more informaiton, refer to the PACE document below:
 https://docs.pace.gatech.edu/interactiveJobs/jupyterInt/
 
 
-* If you could not see the new environment when you create the jupyter notebook
+* If you could not see the new environment when you create the jupyter notebook, do following steps in terminal:
 
 > conda activate geo
 
