@@ -69,6 +69,11 @@ Then, copy and paste the sever address to your browser on your local computer, J
 For more informaiton, refer to the PACE document below:
 https://docs.pace.gatech.edu/interactiveJobs/jupyterInt/
 
+If you could not see the new environment when you create the jupyter notebook
+* conda activate geo
+* conda install ipykernel
+* python -m ipykernel install --user --name=geo
+* 
 ### 4. How to kill a job
 
 Once you finish the interactive session, kill the job:
