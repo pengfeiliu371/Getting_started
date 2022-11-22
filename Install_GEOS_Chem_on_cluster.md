@@ -1,10 +1,10 @@
-### Installation of GEOS-Chem on Georgia Tech Phoenix cluster (using spack)
+### Installation of GEOS-Chem on Georgia Tech Phoenix-Slurm cluster (using spack)
 
-> Contributed By Bai Bin
+> Contributed By Bin Bai & Bingqing Zhang
 
-> Contact Info: baib@mail.sustech.edu.cn
+> Contact Info: bbai32 [at] gatech.edu & bzhang419 [at] gatech.edu
 
-> Last Updated: 2020/12/17
+> Last Updated: 2022/11/22
 
 More Info at http://wiki.seas.harvard.edu/geos-chem/index.php/Getting_Started_with_GEOS-Chem
 
@@ -31,24 +31,64 @@ source $SPACK_ROOT/share/spack/setup-env.sh
 \# or just
 
 \# source /storage/coda1/p-pliu40/0/shared/GEOS-Chem/spack/share/spack/setup-env.sh
+##### 2.1 make sure your compiler is detected by SPACK
+In this cluster we use intel20.0.4, thus type:
+```
+spack compilers 
+```
+You should be able to see the compiler (intel 20.0.4) in the list, the result should be similar to the following: 
+```
+==> Available compilers
+-- gcc rhel7-x86_64 ---------------------------------------------
+gcc@10.3.0  gcc@10.1.0  gcc@8.3.0  gcc@4.8.5  gcc@4.4.7
 
+-- intel rhel7-x86_64 -------------------------------------------
+intel@20.0.4.304  intel@19.1.3.304  intel@19.0.5.281
+```
+If you cannot see the compiler, you can add it to the spack compiler list 
+  - automatically, by typing:
+    spack compiler find
+  - manually, by adding the following lines to this file \<home directory\>/.spack/linux/compilers.yaml
+  ```
+  - compiler:
+    spec: intel@20.0.4.304
+    paths:
+      cc: /usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-4.8.5/intel-parallel-studio-cluster.2020.4-5mxdw276vo2p6wtdkoaghj5h2zkmozjt/compilers_and_libraries_2020.4.304/linux/bin/intel64/icc
+      cxx: /usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-4.8.5/intel-parallel-studio-cluster.2020.4-5mxdw276vo2p6wtdkoaghj5h2zkmozjt/compilers_and_libraries_2020.4.304/linux/bin/intel64/icpc
+      f77: /usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-4.8.5/intel-parallel-studio-cluster.2020.4-5mxdw276vo2p6wtdkoaghj5h2zkmozjt/compilers_and_libraries_2020.4.304/linux/bin/intel64/ifort
+      fc: /usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-4.8.5/intel-parallel-studio-cluster.2020.4-5mxdw276vo2p6wtdkoaghj5h2zkmozjt/compilers_and_libraries_2020.4.304/linux/bin/intel64/ifort
+    flags: {}
+    operating_system: rhel7
+    target: x86_64
+    modules: []
+    environment: {}
+    extra_rpaths: []
+  ```
+  You should change the paths based on the file locations in your system. 
+  Then you will be able to see the compiler added to the list by typing: spack compilers
 #### 3. download Packages Using 'spack install'
 
-module load intel/19.0.5
+module load intel/20.0.4
 
-time spack install netcdf-fortran %intel@19.0.5.281
+time spack install mpich%intel@20.0.4.304
 
-time spack install flex %intel@19.0.5.281
+time spack install openmpi %intel@20.0.4.304
 
-time spack install cmake %intel@19.0.5.281
+time spack install netcdf-fortran %intel@20.0.4.304^mpich
 
-time spack install gmake %intel@19.0.5.281
+time spack install netcdf-c %intel@20.0.4.304^mpich
 
-time spack install ncview %intel@19.0.5.281
+time spack install flex %intel@20.0.4.304
 
-spack load texinfo
+time spack install cmake %intel@20.0.4.304
 
-time spack install cgbd %intel@19.0.5.281
+time spack install gmake %intel@20.0.4.304
+
+time spack install ncview %intel@20.0.4.304^mpich
+
+spack load texinfo@6.5%intel@20.0.4.304
+
+time spack install cgbd %intel@20.0.4.304
 
 \# see also https://github.com/geoschem/geos-chem-cloud/issues/35
 
