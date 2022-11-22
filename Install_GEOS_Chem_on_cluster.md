@@ -92,6 +92,8 @@ time spack install cgbd %intel@20.0.4.304
 
 \# see also https://github.com/geoschem/geos-chem-cloud/issues/35
 
+(Note: if you see this error when installing new packages, " Error: Package 'cray-mpich' not found.", add "^mpich" )
+
 \####################################################################
 
 \# if you are in Pengfei Liu’s group at Gatech 
@@ -156,26 +158,16 @@ make -j16 build
 
 #### 9. submit task
 
-qsub xxx.pbs
+sbatch xxx.sbatch
 
-\# see template in /storage/coda1/p-pliu40/0/shared/GEOS-Chem/.template.pbs
+\# see template in /storage/coda1/p-pliu40/0/shared/GEOS-Chem/slurm/GC12.9.3/run_GC12.sbatch
 
 \# copy it to your own run dir and modify
 
 #### 10. check your task state
 
-qstat -u <username>
+squeue -u <username>
 
-\# for me, it’s qstat -u bbai32
+\# for me, it’s squeue -u bbai32
 
-#### 11. other useful commands
 
-qdel <job id> #kill task
-
-pace-check-queue -c inferno  #check nodes state
-
-pace-check-queue -s inferno  #check nodes property
-
-checkjob <job id>
-
-mam-balance
