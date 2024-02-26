@@ -128,7 +128,7 @@ Only if you want to track your code change with Github
 ```
 git remote add upstream <Central repo URL>
 ```
-##e.g., for me, it is: git remote add upstream https://github.com/bzhang419/GCClassic.git
+##e.g., for me, it is: `git remote add upstream https://github.com/bzhang419/GCClassic.git`
 
 Then if you type `git remote -v`, origin should point to your remote repo and upstream should point to the central repo like this:
 ```
