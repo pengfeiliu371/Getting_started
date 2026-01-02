@@ -2,97 +2,131 @@
 
 > Contributed By Bin Bai & Bingqing Zhang
 
-> Last Updated: 2024/2/25
+> Last Updated: 2025/1/25
 
-More Info at https://geos-chem.readthedocs.io/en/stable/getting-started/quick-start.html
+For more information, visit:[GEOS-Chem Quick Start Guide](https://geos-chem.readthedocs.io/en/latest/getting-started/quick-start.html)
 
-\####################################################################
+---
 
-\# if you are in Pengfei Liu’s group at Gatech 
+### Notes for Pengfei Liu’s Group at Georgia Tech
 
-\# skip step 1-3 and start from step 4 
+- **Skip Steps 1–3. Start from Step 4.**
+- Spack is already installed.
+- Refer to the [Spack Guide](https://geos-chem.readthedocs.io/en/latest/geos-chem-shared-docs/supplemental-guides/spack-guide.html).
 
-\# spack is already installed ###
+---
 
-\####################################################################
 
-#### 1. Download SPACK in home directory
+### **1. Download Spack to Your Home Directory**
 ```
 git clone https://github.com/spack/spack.git
 ```
-#### 2. Load SPACK
+### **2. Load Spack**
 ```
 export SPACK_ROOT=/storage/coda1/p-pliu40/0/shared/GEOS-Chem/spack
 
 source $SPACK_ROOT/share/spack/setup-env.sh
 ```
-\# or just
+Alternatively:
 ```
 source /storage/coda1/p-pliu40/0/shared/GEOS-Chem/spack/share/spack/setup-env.sh
 ```
-##### 2.1 Make sure your compiler is detected by SPACK
-In this cluster we use intel20.0.4, thus type:
+#### **2.1 Detect Existing Software**
+```
+spack external find
+```
+Spack will list software already available on the cluster and add them to `<Your Home Directory>/.spack/packages.yaml`. For example:
+
+```bash
+==> The following specs have been detected on this system and added to ~/.spack/packages.yaml
+autoconf@2.69    cmake@3.26.5    findutils@4.8.0  git@2.43.5     libtool@2.4.6  perl@5.32.1    zlib@1.2.11
+...
+```
+#### **2.2 Detect Existing Compilers**
 ```
 spack compilers 
 ```
-You should be able to see the compiler (intel 20.0.4) in the list, the result should be similar to the following: 
+Spack should detect the available compilers, e.g.:
 ```
 ==> Available compilers
--- gcc rhel7-x86_64 ---------------------------------------------
-gcc@10.3.0  gcc@10.1.0  gcc@8.3.0  gcc@4.8.5  gcc@4.4.7
+-- gcc rhel9-x86_64 ---------------------------------------------
+gcc@11.4.1
 
--- intel rhel7-x86_64 -------------------------------------------
-intel@20.0.4.304  intel@19.1.3.304  intel@19.0.5.281
+-- intel rhel9-x86_64 -------------------------------------------
+intel@2023.1.0  intel@2021.9.0
+
+-- oneapi rhel9-x86_64 ------------------------------------------
+oneapi@2023.1.0
 ```
-If you cannot see the compiler, you can add it to the spack compiler list 
-  - automatically, by typing:
-    spack compiler find
-  - manually, by adding the following lines to this file \<home directory\>/.spack/linux/compilers.yaml
+If your desired compiler is not listed, add it:
+
+- **Automatically:**
+  ```bash
+  spack compiler find
   ```
+- **Manually:** Edit `<home directory>/.spack/linux/compilers.yaml` to include:
+  ```yaml
   - compiler:
-    spec: intel@20.0.4.304
+    spec: intel@=2021.9.0
     paths:
-      cc: /usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-4.8.5/intel-parallel-studio-cluster.2020.4-5mxdw276vo2p6wtdkoaghj5h2zkmozjt/compilers_and_libraries_2020.4.304/linux/bin/intel64/icc
-      cxx: /usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-4.8.5/intel-parallel-studio-cluster.2020.4-5mxdw276vo2p6wtdkoaghj5h2zkmozjt/compilers_and_libraries_2020.4.304/linux/bin/intel64/icpc
-      f77: /usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-4.8.5/intel-parallel-studio-cluster.2020.4-5mxdw276vo2p6wtdkoaghj5h2zkmozjt/compilers_and_libraries_2020.4.304/linux/bin/intel64/ifort
-      fc: /usr/local/pace-apps/spack/packages/linux-rhel7-x86_64/gcc-4.8.5/intel-parallel-studio-cluster.2020.4-5mxdw276vo2p6wtdkoaghj5h2zkmozjt/compilers_and_libraries_2020.4.304/linux/bin/intel64/ifort
-    flags: {}
-    operating_system: rhel7
+      cc: /usr/local/pace-apps/spack/packages/linux-rhel9-x86_64_v3/gcc-11.3.1/intel-oneapi-compilers-classic-2021.9.0->
+      cxx: /usr/local/pace-apps/spack/packages/linux-rhel9-x86_64_v3/gcc-11.3.1/intel-oneapi-compilers-classic-2021.9.0>
+      f77: /usr/local/pace-apps/spack/packages/linux-rhel9-x86_64_v3/gcc-11.3.1/intel-oneapi-compilers-classic-2021.9.0>
+      fc: /usr/local/pace-apps/spack/packages/linux-rhel9-x86_64_v3/gcc-11.3.1/intel-oneapi-compilers-classic-2021.9.0->    flags: {}
+    operating_system: rhel9
     target: x86_64
     modules: []
     environment: {}
     extra_rpaths: []
   ```
-  You should change the paths based on the file locations in your system. 
-  Then you will be able to see the compiler added to the list by typing: spack compilers
-#### 3. Download Packages Using 'spack install'
-```
-module load intel/20.0.4
 
-time spack install mpich%intel@20.0.4.304
+Replace paths with the actual locations of the compiler binaries. Verify with:
 
-time spack install openmpi %intel@20.0.4.304
-
-time spack install netcdf-fortran %intel@20.0.4.304^mpich
-
-time spack install netcdf-c %intel@20.0.4.304^mpich
-
-time spack install flex %intel@20.0.4.304
-
-time spack install cmake %intel@20.0.4.304
-
-time spack install gmake %intel@20.0.4.304
-
-time spack install ncview %intel@20.0.4.304^mpich
-
-spack load texinfo@6.5%intel@20.0.4.304
-
-time spack install cgbd %intel@20.0.4.304
+```bash
+spack compilers
 ```
 
-\# see also https://github.com/geoschem/geos-chem-cloud/issues/35
+### **3. Install Required Packages**
 
-(Note: if you see this error when installing new packages,  `Error: Package 'cray-mpich' not found.`, add `^mpich` )
+```
+module load intel/2021.9.0
+
+time spack install mpich%intel@2021.9.0
+
+time spack install openmpi %intel@2021.9.0
+
+time spack install netcdf-fortran %intel@2021.9.0^mpich
+
+time spack install netcdf-c %intel@2021.9.0^mpich
+
+time spack install flex %intel@2021.9.0
+
+time spack install cmake %intel@2021.9.0
+
+time spack install gmake %intel@2021.9.0
+
+time spack install ncview %intel@2021.9.04^python@3.9
+
+time spack install nco %intel@2021.9.04^mpich
+
+spack load texinfo@6.5%intel@2021.9.0
+
+time spack install esmf %intel@2021.9.04^mpich
+
+# time spack install cgdb %intel@20.0.4.304 # This package is not required
+```
+
+### Troubleshooting
+
+- **Package Not Found:** If you see this error when installing new packages,  `Error: Package 'cray-mpich' not found.`, add `^mpich` 
+
+- **Cache Conflicts:** If you encounter this error:```==> Error: Name``` , the reason might be two versions of spack caches conflicting with each other, you can solve this by renaming (or deleting) the original cache file in ```{Home directory}/.spack/cache```
+
+- **Build Errors:** Uninstall the failing package and try a different version. Example:
+```
+>> 25    configure: error: perl >= 5.8.1 with Encode, Data::Dumper and Unicode::Normalize required by Texinfo.
+```
+
 
 \####################################################################
 
@@ -102,44 +136,46 @@ time spack install cgbd %intel@20.0.4.304
 
 \####################################################################
 
-#### 4. Download the source code 
+### **4. Download GEOS-Chem Source Code** 
 
-For version 14.0.0 or later
-
-generate a new directory (e.g. GC14) and download the source code here
+For version 14.0.0 or later, create a new directory (e.g. GC14) and download the source code here
 ```
 mkdir GC14
 cd GC14
 ```
-\# If you want to track your code change with Github, you will first need to fork the repository "GCClassic" to your Github account, then clone the repo from your account: 
-```
-git clone --recurse-submodules https://github.com/<your github account>/GCClassic.git Code.X.Y.Z
-```
-or you can simply download the source code from the official git repository
-```
-git clone --recurse-submodules https://github.com/geoschem/GCClassic.git Code.X.Y.Z
-```
-Here I will name the code folder with the code version, i.e., The name of my folder is Code.14.3.0. By default you will download the most recent version. You can check the version by:
-```
+- **Using GitHub:**
+  - Fork the `GCClassic` repository to your GitHub account.
+  - Clone your fork:
+    ```bash
+    git clone --recurse-submodules https://github.com/<your_github_account>/GCClassic.git Code.X.Y.Z
+    ```
+- **Official Repository:**
+  ```bash
+  git clone --recurse-submodules https://github.com/geoschem/GCClassic.git Code.X.Y.Z
+  ```
+
+Replace `Code.X.Y.Z` with the version, e.g., `Code.14.3.0`. Confirm the version:
+
+```bash
 git log -n 1
 ```
-#### 5. (Optional) Link the repo on the cluster (remote repo) to the repo on your GitHub account (central repo)
+### **5. (Optional) Link Local and Central Repositories**
 Only if you want to track your code change with Github
 ```
 git remote add upstream <Central repo URL>
 ```
 ##e.g., for me, it is: `git remote add upstream https://github.com/bzhang419/GCClassic.git`
 
-Then if you type `git remote -v`, origin should point to your remote repo and upstream should point to the central repo like this:
+Then if you type `git remote -v`, the origin should point to your remote repo and the upstream should point to the central repo like this:
 ```
 origin  https://github.com/bzhang419/GCClassic.git (fetch)
 origin  https://github.com/bzhang419/GCClassic.git (push)
 upstream        https://github.com/bzhang419/GCClassic.git (fetch)
 upstream        https://github.com/bzhang419/GCClassic.git (push)
 ```
-#### 6. (Optional) Make changes on your remote repo (origin) and update the change on your central repo (main)
-1) make some change
-2) 
+### **6. (Optional) Commit and Push Changes**
+1) Make some changes.
+2) Stage and commit:
    ```
    git add .
    git commit -m "info of your change"
@@ -149,42 +185,47 @@ upstream        https://github.com/bzhang419/GCClassic.git (push)
    
    Every time you perform a git action, you will need to enter the user name and token. If you want to avoid this, you can store your credentials in cache by entering `git config --global --replace-all credential.helper cache`
    
-#### 7. Load your environment
-Before you compile or run GEOS-Chem, you will need to set up the environment. The configuration files ".GC" can be found in the shared folder from Dr. Liu's group. Copy that in your own directory and execute
+### **7. Load Environment**
+Use the `.GC` file provided by Dr. Liu's group:
 ```
 source ~/.GC
 ```
-#### 8. Create a run directory
+### **8. Create a Run Directory**
 ```
 cd run/
 ./createRunDir.sh
 ```
 This step will create a run directory that contains files for your simulation.
-#### 9. Configure your build, compile and install
+### **9. Configure, Compile, and Install**
 ```
-# navigate to the run directory you just created
+# Navigate to the run directory you just created
 cd /path/to/gc_4x5_merra2_fullchem  # Skip if you are already here
 cd build
 # configure your build
-cmake ../../Code14.3.0 -DRUNDIR=..
+cmake ../CodeDir -DRUNDIR=..
 # compile and install
 make -j
 make install
 ```
-If the compilation is successful, you will see an executable `gcclassic` in your run directory
-#### 10. Configure your simulation
-Navigate to your run directory '/path/to/gc_4x5_merra2_fullchem', review the following files before your simulations and edit them based on your simulation: 
+If successful, the executable `gcclassic` will appear in the run directory.
+### **10. Configure Simulation Settings**
+Edit the following files in your run directory:
+
+- `geoschem_config.yml`
+- `HISTORY.rc`
+- `HEMCO_Diagn.rc`
+- `HEMCO_Config.rc`
+- `HEMCO_Config.rc.gmao_metfields`
+Refer to the [[GEOS-Chem Wiki]([https://geos-chem.readthedocs.io](https://geos-chem.readthedocs.io/en/stable/getting-started/quick-start.html#configure-your-run-directory))] for configuration details.
+### **11. Submit a Job**
+Use the sample Slurm script provided in Dr. Liu’s shared folder:
+```bash
+/storage/coda1/p-pliu40/0/shared/GEOS-Chem/slurm_rh9/run_GC.sbatch
 ```
-vi geoschem_config.yml
-vi HISTORY.rc
-vi HEMCO_Diagn.rc
-vi HEMCO_Config.rc
-vi HEMCO_Config.rc.gmao_metfields
-```
-For more info of the configuration files above, refer to GEOS-Chem wiki.
-#### 11. Submit a job to run GEOS-Chem
-You can find a sample sbatch script in the Liu group shared folder: `/storage/coda1/p-pliu40/0/shared/GEOS-Chem/slurm/GC12.9.3/run_GC12.sbatch`, copy one to your run directory, make some edits, and submit it by:
-```
-sbatch xxx.sbatch
+
+Copy it to your run directory, make necessary edits, and submit:
+
+```bash
+sbatch run_GC.sbatch
 ```
 
