@@ -1,8 +1,7 @@
 ### Installation of GEOS-Chem (version 14) on Georgia Tech Phoenix-Slurm cluster (using spack)
 
-> Contributed By Bin Bai & Bingqing Zhang
-
-> Last Updated: 2025/1/25
+> Contributed Bingqing Zhang & By Bin Bai 
+> Last Updated: 2026/08/08
 
 For more information, visit:[GEOS-Chem Quick Start Guide](https://geos-chem.readthedocs.io/en/latest/getting-started/quick-start.html)
 
@@ -15,7 +14,17 @@ For more information, visit:[GEOS-Chem Quick Start Guide](https://geos-chem.read
 - Refer to the [Spack Guide](https://geos-chem.readthedocs.io/en/latest/geos-chem-shared-docs/supplemental-guides/spack-guide.html).
 
 ---
+### 0. Default module in GT-Phoenix cluster
+```
+----------------------------------------------------
+Currently Loaded Modules:
+  1) xalt/3.2.3       3) mpfr/4.2.0 (H)   5) zlib/1.2.13 (H)   7) libpciaccess/0.17 (H)   9) slurm/23.11.1    (H)
+  2) gmp/6.2.1  (H)   4) mpc/1.3.1  (H)   6) gcc/12.3.0        8) pmix/4.2.6        (H)  10) mvapich2/2.3.7-1
 
+  Where:
+   H:  Hidden Module
+----------------------------------------------------
+```
 
 ### **1. Download Spack to Your Home Directory**
 ```
@@ -23,6 +32,10 @@ git clone https://github.com/spack/spack.git
 ```
 ### **2. Load Spack**
 ```
+module purge
+
+module load gcc/12.3.0
+
 export SPACK_ROOT=/storage/coda1/p-pliu40/0/shared/GEOS-Chem/spack
 
 source $SPACK_ROOT/share/spack/setup-env.sh
@@ -31,26 +44,31 @@ Alternatively:
 ```
 source /storage/coda1/p-pliu40/0/shared/GEOS-Chem/spack/share/spack/setup-env.sh
 ```
-#### **2.1 Detect Existing Software**
-```
-spack external find
-```
-Spack will list software already available on the cluster and add them to `<Your Home Directory>/.spack/packages.yaml`. For example:
 
-```bash
-==> The following specs have been detected on this system and added to ~/.spack/packages.yaml
-autoconf@2.69    cmake@3.26.5    findutils@4.8.0  git@2.43.5     libtool@2.4.6  perl@5.32.1    zlib@1.2.11
-...
+#### **2.1 Put Spack’s build stage on an exec-enabled project path (not /tmp)**
 ```
-#### **2.2 Detect Existing Compilers**
+mkdir -p /storage/home/hcoda1/0/${USER}/spack-stage
+spack config add "config:build_stage:[/storage/home/hcoda1/0/${USER}/spack-stage]"
+spack config get config # verify the build_stage shows your project path
 ```
+#### 2.2 Start with a clean slate and clean env
+```
+spack clean -a
+unset CC CXX FC F77 F90 CFLAGS CXXFLAGS FFLAGS LDFLAGS LIBS CPPFLAGS
+```
+
+#### **2.3 Detect Existing Compilers**
+Here I choose to compile GEOS-Chem with gcc. First load the compiler:
+```
+module purge
+module load gcc/12.3.0
 spack compilers 
 ```
 Spack should detect the available compilers, e.g.:
 ```
 ==> Available compilers
 -- gcc rhel9-x86_64 ---------------------------------------------
-gcc@11.4.1
+gcc@12.3.0  gcc@11.5.0  gcc@11.4.1
 
 -- intel rhel9-x86_64 -------------------------------------------
 intel@2023.1.0  intel@2021.9.0
@@ -65,17 +83,19 @@ If your desired compiler is not listed, add it:
   spack compiler find
   ```
 - **Manually:** Edit `<home directory>/.spack/linux/compilers.yaml` to include:
+
   ```yaml
   - compiler:
-    spec: intel@=2021.9.0
+    spec: gcc@=12.3.0
     paths:
-      cc: /usr/local/pace-apps/spack/packages/linux-rhel9-x86_64_v3/gcc-11.3.1/intel-oneapi-compilers-classic-2021.9.0->
-      cxx: /usr/local/pace-apps/spack/packages/linux-rhel9-x86_64_v3/gcc-11.3.1/intel-oneapi-compilers-classic-2021.9.0>
-      f77: /usr/local/pace-apps/spack/packages/linux-rhel9-x86_64_v3/gcc-11.3.1/intel-oneapi-compilers-classic-2021.9.0>
-      fc: /usr/local/pace-apps/spack/packages/linux-rhel9-x86_64_v3/gcc-11.3.1/intel-oneapi-compilers-classic-2021.9.0->    flags: {}
+      cc: /usr/local/pace-apps/spack/packages/linux-rhel9-x86_64_v3/gcc-11.3.1/gcc-12.3.0-ukkkutsxfl5kpnnaxflpkq2jtliwt>
+      cxx: /usr/local/pace-apps/spack/packages/linux-rhel9-x86_64_v3/gcc-11.3.1/gcc-12.3.0-ukkkutsxfl5kpnnaxflpkq2jtliw>
+      f77: /usr/local/pace-apps/spack/packages/linux-rhel9-x86_64_v3/gcc-11.3.1/gcc-12.3.0-ukkkutsxfl5kpnnaxflpkq2jtliw>
+      fc: /usr/local/pace-apps/spack/packages/linux-rhel9-x86_64_v3/gcc-11.3.1/gcc-12.3.0-ukkkutsxfl5kpnnaxflpkq2jtliwt>
+    flags: {}
     operating_system: rhel9
     target: x86_64
-    modules: []
+    modules: [gcc/12.3.0] #<== add this
     environment: {}
     extra_rpaths: []
   ```
@@ -85,40 +105,56 @@ Replace paths with the actual locations of the compiler binaries. Verify with:
 ```bash
 spack compilers
 ```
-
-### **3. Install Required Packages**
-
+### **3. Detect externals**
 ```
-module load intel/2021.9.0
+spack external find
+```
+Spack will list software already available on the cluster and add them to `<Your Home Directory>/.spack/packages.yaml`. For example:
+```bash
+==> The following specs have been detected on this system and added to /storage/home/hcoda1/0/{USER}/.spack/packages.yaml
+git@2.47.3  git-lfs@3.6.1  openssl@3.2.2  zlib@1.2.13
+```
 
-time spack install mpich%intel@2021.9.0
+### **4. Install Required Packages (consistent with openmpi)**
+```
 
-time spack install openmpi %intel@2021.9.0
+spack env create geoschem-gcc
+spack env activate geoschem-gcc
+spack config add "packages:all:target:[x86_64_v3]"
+# add OpenMPI first
+spack add openmpi@5.0.5 %gcc@12.3.0
+spack concretize --fresh
+spack install
 
-time spack install netcdf-fortran %intel@2021.9.0^mpich
+# after OpenMPI is done, add NetCDF stack
+spack add hdf5+fortran+hl+mpi %gcc@12.3.0 ^openmpi@5.0.5
+spack add netcdf-c+mpi %gcc@12.3.0 ^openmpi@5.0.5
+spack add netcdf-fortran %gcc@12.3.0 ^openmpi@5.0.5
 
-time spack install netcdf-c %intel@2021.9.0^mpich
+spack concretize --fresh
+spack install
 
-time spack install flex %intel@2021.9.0
+# (GCHP only, but I also install this)
+spack add parallelio %gcc@12.3.0 ^openmpi@5.0.5
+spack add esmf+mpi %gcc@12.3.0 ^openmpi@5.0.5
+spack concretize 
+spack install --jobs 4
 
-time spack install cmake %intel@2021.9.0
+If there is an ESMF memory issue, 
+spack clean -s esmf
+spack install --jobs 2 esmf
 
-time spack install gmake %intel@2021.9.0
 
-time spack install ncview %intel@2021.9.04^python@3.9
+# Utilities
+spack add curl %gcc@12.3.0
+spack add nco %gcc@12.3.0
+spack add cdo %gcc@12.3.0 ^proj~curl
 
-time spack install nco %intel@2021.9.04^mpich
-
-spack load texinfo@6.5%intel@2021.9.0
-
-time spack install esmf %intel@2021.9.04^mpich
-
-# time spack install cgdb %intel@20.0.4.304 # This package is not required
+spack concretize 
+spack install
 ```
 
 ### Troubleshooting
-
-- **Package Not Found:** If you see this error when installing new packages,  `Error: Package 'cray-mpich' not found.`, add `^mpich` 
 
 - **Cache Conflicts:** If you encounter this error:```==> Error: Name``` , the reason might be two versions of spack caches conflicting with each other, you can solve this by renaming (or deleting) the original cache file in ```{Home directory}/.spack/cache```
 
@@ -186,9 +222,139 @@ upstream        https://github.com/bzhang419/GCClassic.git (push)
    Every time you perform a git action, you will need to enter the user name and token. If you want to avoid this, you can store your credentials in cache by entering `git config --global --replace-all credential.helper cache`
    
 ### **7. Load Environment**
-Use the `.GC` file provided by Dr. Liu's group:
+Use the `GCenvgcc` file provided by Dr. Liu's group:
 ```
-source ~/.GC
+source ~/GCenvgcc
+```
+A sample GC environment config file is as follows:
+
+```
+#set -euo pipefail
+
+echo "=== Reset the environment ==="
+
+# Helper: unset all variables that start with a given prefix
+unset_prefix() {
+  local prefix="$1"
+  local name
+  while IFS= read -r name; do
+    unset "$name"
+  done < <(compgen -v | awk -v p="$prefix" 'index($0,p)==1')
+}
+
+# Unset specific known vars if set
+for v in PERL_HOME CC CXX FC F77 F90 F90FLAGS FFLAGS CFLAGS CXXFLAGS LDFLAGS \
+         ESMFMKFILE OMP_NUM_THREADS OMP_STACKSIZE; do
+  unset "$v" 2>/dev/null || true
+done
+
+unset_prefix NETCDF_
+unset_prefix GC_
+unset_prefix HDF5_
+
+module purge
+module load gcc/12.3.0
+
+echo "=== Set up Spack ==="
+export SPACK_ROOT=/storage/project/r-pliu40-0/shared/GEOS-Chem/spack
+source $SPACK_ROOT/share/spack/setup-env.sh
+
+echo "=== Activate Spack environment ==="
+spack env activate geoschem-gcc
+
+echo "=== Load exact GEOS-Chem/GCHP toolchain by hash ==="
+
+# Hashes from current geoschem-gcc environment
+OMPI_HASH=tmnxxce      # openmpi@5.0.5%gcc@12.3.0
+HDF5_HASH=gafqxk4      # hdf5@1.14.5%gcc@12.3.0 +fortran+hl+mpi
+NCC_HASH=y2lhyty       # netcdf-c@4.9.2%gcc@12.3.0 +mpi
+NCF_HASH=arsv2g4       # netcdf-fortran@4.6.1%gcc@12.3.0
+ESMF_HASH=duszk3p      # esmf@8.8.0%gcc@12.3.0 +mpi
+PIO_HASH=ozlp56j       # parallelio@2.6.3%gcc@12.3.0
+NCO_HASH=i5uz2jq       # nco@5.2.4%gcc@12.3.0
+CDO_HASH=jshwm5b       # cdo@2.4.4%gcc@12.3.0
+
+# Core MPI / I/O stack
+spack load "/$OMPI_HASH"
+spack load "/$HDF5_HASH"
+spack load "/$NCC_HASH"
+spack load "/$NCF_HASH"
+
+# GCHP dependencies
+spack load "/$PIO_HASH"
+spack load "/$ESMF_HASH"
+
+# Utilities
+spack load "/$NCO_HASH"
+spack load "/$CDO_HASH"
+
+echo "=== Compilers: use MPI wrappers ==="
+export CC=mpicc
+export CXX=mpicxx
+export FC=mpifort
+
+echo "=== Discover NetCDF prefixes from config tools ==="
+export NETCDF_C_ROOT="$(nc-config --prefix)"
+export NETCDF_FORTRAN_ROOT="$(nf-config --prefix)"
+
+# Traditional GEOS-Chem variables
+export NETCDF_HOME="$NETCDF_C_ROOT"
+export NETCDF_BIN="$NETCDF_C_ROOT/bin"
+export NETCDF_INCLUDE="$NETCDF_C_ROOT/include"
+export NETCDF_LIB="$NETCDF_C_ROOT/lib"
+export GC_BIN="$NETCDF_BIN"
+export GC_INCLUDE="$NETCDF_INCLUDE"
+export GC_LIB="$NETCDF_LIB"
+
+export NETCDF_FORTRAN_HOME="$NETCDF_FORTRAN_ROOT"
+export NETCDF_FORTRAN_BIN="$NETCDF_FORTRAN_ROOT/bin"
+export NETCDF_FORTRAN_INCLUDE="$NETCDF_FORTRAN_ROOT/include"
+export NETCDF_FORTRAN_LIB="$NETCDF_FORTRAN_ROOT/lib"
+export GC_F_BIN="$NETCDF_FORTRAN_BIN"
+export GC_F_INCLUDE="$NETCDF_FORTRAN_INCLUDE"
+export GC_F_LIB="$NETCDF_FORTRAN_LIB"
+
+echo "=== HDF5 and ESMF prefixes ==="
+export HDF5_ROOT="$(spack location -i "/$HDF5_HASH")"
+export HDF5_DIR="$HDF5_ROOT"
+
+export ESMF_ROOT="$(spack location -i "/$ESMF_HASH")"
+export ESMFMKFILE="${ESMF_ROOT}/lib/esmf.mk"
+
+export PIO_ROOT="$(spack location -i "/$PIO_HASH")"
+
+echo "=== Runtime and discovery paths ==="
+export LD_LIBRARY_PATH="${NETCDF_FORTRAN_LIB}:${NETCDF_LIB}:${HDF5_ROOT}/lib:${PIO_ROOT}/lib:${ESMF_ROOT}/lib:${LD_LIBRARY_PATH:-}"
+
+export CMAKE_PREFIX_PATH="${NETCDF_C_ROOT}:${NETCDF_FORTRAN_ROOT}:${HDF5_ROOT}:${PIO_ROOT}:${ESMF_ROOT}:${CMAKE_PREFIX_PATH:-}"
+export PKG_CONFIG_PATH="${NETCDF_C_ROOT}/lib/pkgconfig:${HDF5_ROOT}/lib/pkgconfig:${PIO_ROOT}/lib/pkgconfig:${PKG_CONFIG_PATH:-}"
+
+# Add runtime search paths parsed from *-config
+for p in $(nf-config --flibs | tr ' ' '\n' | grep '^-L' | sed 's/^-L//'); do
+  [[ ":$LD_LIBRARY_PATH:" == *":$p:"* ]] || export LD_LIBRARY_PATH="$p:${LD_LIBRARY_PATH:-}"
+done
+
+for p in $(nc-config --libs | tr ' ' '\n' | grep '^-L' | sed 's/^-L//'); do
+  [[ ":$LD_LIBRARY_PATH:" == *":$p:"* ]] || export LD_LIBRARY_PATH="$p:${LD_LIBRARY_PATH:-}"
+done
+
+echo "=== ulimit settings ==="
+ulimit -c unlimited
+ulimit -s unlimited
+
+echo "=== Sanity checks ==="
+which mpicc
+which mpifort
+which nc-config
+which nf-config
+which ncks
+which cdo
+echo "NetCDF-C  : $(nc-config --version) @ ${NETCDF_C_ROOT}"
+echo "NetCDF-For: $(nf-config --version) @ ${NETCDF_FORTRAN_ROOT}"
+echo "ESMFMKFILE: ${ESMFMKFILE}"
+
+echo "GC/GCHP toolchain ready: GCC 12.3.0 + OpenMPI 5.0.5 + HDF5 + NetCDF + ESMF + PIO."
+
 ```
 ### **8. Create a Run Directory**
 ```
